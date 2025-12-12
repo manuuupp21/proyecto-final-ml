@@ -1,0 +1,54 @@
+# Ignorar archivos y carpetas de datos
+/data/
+/data/raw/
+/data/processed/
+
+# Ignorar archivos de modelos entrenados
+/models/*.pkl
+/models/tests/*
+
+
+# Ignorar archivos temporales
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Ignorar archivos de entorno de desarrollo
+.env
+.venv
+venv/
+ENV/
+env/
+__pycache__/
+
+# Ignorar archivos de configuración específicos de IDEs
+.idea/
+.vscode/
+
+# Ignorar archivos generados por Jupyter
+.ipynb_checkpoints/
+
+# Ignorar dependencias locales del entorno
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Ignorar archivos de resultados generados (gráficos, reportes, etc.)
+/outputs/*
+!.outputs/confusion_matrix.png  # Ejemplo: no ignorar archivos específicos (como gráficos generados)
+!.outputs/feature_importance.html
+
+# Ignorar archivos de configuración de Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Archivos de sistemas operativos específicos
+.DS_Store          # macOS
+Thumbs.db          # Windows
+
+# Ignorar archivos específicos de notebooks de Jupyter
+*.ipynb_checkpoints/
+
