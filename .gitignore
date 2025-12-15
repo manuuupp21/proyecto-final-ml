@@ -2,6 +2,7 @@
 /data/
 /data/raw/
 /data/processed/
+dataset_practica_final.csv
 
 # Ignorar archivos de modelos entrenados
 /models/*.pkl
