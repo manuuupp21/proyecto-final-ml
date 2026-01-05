@@ -42,6 +42,14 @@ pip-delete-this-directory.txt
 *.pyd
 __pycache__/
 
+# ignorar modelos entrenados en formato .pkl
+models/
+*.pt
+*.pth
+*.h5
+*.pkl
+*.joblib
+
 # Archivos de sistemas operativos específicos
 .DS_Store          # macOS
 Thumbs.db          # Windows
