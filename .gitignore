@@ -4,13 +4,10 @@
 /data/processed/
 dataset_practica_final.csv
 
-<<<<<<< HEAD
 # Ignorar archivos de modelos entrenados
 /models/*.pkl
 /models/tests/*
 
-=======
->>>>>>> 7c06a1184b0019d462e0600fe773ba161ed04d44
 
 # Ignorar archivos temporales
 *.log
@@ -49,17 +46,6 @@ pip-delete-this-directory.txt
 *.pyd
 __pycache__/
 
-<<<<<<< HEAD
-=======
-# ignorar modelos entrenados en formato .pkl
-models/
-*.pt
-*.pth
-*.h5
-*.pkl
-*.joblib
-
->>>>>>> 7c06a1184b0019d462e0600fe773ba161ed04d44
 # Archivos de sistemas operativos específicos
 .DS_Store          # macOS
 Thumbs.db          # Windows
@@ -67,7 +53,5 @@ Thumbs.db          # Windows
 # Ignorar archivos específicos de notebooks de Jupyter
 *.ipynb_checkpoints/
 
-<<<<<<< HEAD
-=======
-.DS_Store
->>>>>>> 7c06a1184b0019d462e0600fe773ba161ed04d44
+./structured_data_classifier
+models/model_results.csv
