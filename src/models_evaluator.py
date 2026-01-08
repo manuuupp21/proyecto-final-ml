@@ -12,10 +12,16 @@ class ModelEvaluator:
     Encapsula la evaluación de un modelo de clasificación binaria.
     """
 
-    def evaluate(self, model, X_test, y_test):
-        # Predicciones
-        y_pred = model.predict(X_test)
-        y_proba = model.predict_proba(X_test)[:, 1]
+    def evaluate(self, model, X_test, y_test, threshold=0.5):
+        # Si el modelo tiene predict_proba (sklearn)
+        if hasattr(model, "predict_proba"):
+            y_proba = model.predict_proba(X_test)[:, 1]
+        else:
+            # Keras/AutoKeras (para redes neuronales)
+            y_proba = model.predict(X_test).ravel()
+
+        # Clases predichas según el umbral
+        y_pred = (y_proba > threshold).astype(int)
 
         # Métricas
         acc = accuracy_score(y_test, y_pred)

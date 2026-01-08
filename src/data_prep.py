@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from scipy.sparse import csr_matrix, hstack
-from .config import DATASET_PATH, TEST_SIZE, RANDOM_STATE
+from config import DATASET_PATH, TEST_SIZE, RANDOM_STATE
 
 
 SCALER = StandardScaler()
@@ -18,7 +18,10 @@ def load_data(path=DATASET_PATH):
 # Limpieza datos
 # ------------------------
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
+    print("Ejecutando Cleaning de datos...")
     # Eliminar duplicados
+    df = df.copy()
+
     df = df.drop_duplicates()
 
     # Convertir arrival_date_month a formato numérico
@@ -38,9 +41,8 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     df['has_company'] = df['company'].notna().astype(int)
     df = df.drop(columns=['company'])
 
-    # Rellenar valores nulos en 'agent' con 'Unknown'
-    df['agent'].value_counts(dropna=False)
-    df['agent'] = df['agent'].fillna('Unknown')
+    # Decido eliminar la variable Agent tiene una alta cardinalidad y bajo valor semantico
+    df = df.drop(columns=['agent'])
 
     #Estas columnas no se van a tener en cuenta para el modelo
     df = df.drop(columns=['reservation_status', 'reservation_status_date'])
@@ -54,6 +56,7 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
 # Preprocesamiento para entrenamiento
 # ------------------------
 def preprocess_for_train(df, target_col="is_canceled", scaler=SCALER, encoder=ENCODER):
+    print("Ejecutando Preprocesamiento de datos para entrenamiento...")
     X = df.drop(columns=target_col)
     y = df[target_col]
 
@@ -72,6 +75,7 @@ def preprocess_for_train(df, target_col="is_canceled", scaler=SCALER, encoder=EN
 # Preprocesamiento para predicción
 # ------------------------
 def preprocess_for_predict(df, scaler=SCALER, encoder=ENCODER):
+    print("Ejecutando Preprocesamiento de datos para predicción...")
     num_cols = df.select_dtypes(include=["int64", "float64"]).columns
     cat_cols = df.select_dtypes(include="object").columns
 
@@ -86,6 +90,7 @@ def preprocess_for_predict(df, scaler=SCALER, encoder=ENCODER):
 # División train-test
 # ------------------------
 def split_ml(X, y, test_size=0.2, random_state=42):
+    print("Ejecutando división train-test...")
     return train_test_split(
         X,
         y,
@@ -97,6 +102,7 @@ def split_ml(X, y, test_size=0.2, random_state=42):
 # Pipeline completo para entrenamiento
 # ------------------------
 def prepare_data_for_train(scaler=SCALER, encoder=ENCODER):
+    print("Ejecutando Pipeline completo para entrenamiento...")
     df = load_data()
     df = clean_data(df)
     X, y, scaler, encoder = preprocess_for_train(df,scaler=scaler,encoder= encoder)
@@ -107,6 +113,7 @@ def prepare_data_for_train(scaler=SCALER, encoder=ENCODER):
 # Pipeline completo para predicción
 # ------------------------
 def prepare_data_for_predict(df, scaler=SCALER, encoder=ENCODER):
+    print("Ejecutando Pipeline completo para predicción...")
     df = clean_data(df)
     X, _, _, _ = preprocess_for_predict(df, scaler=scaler, encoder=encoder)
     return X

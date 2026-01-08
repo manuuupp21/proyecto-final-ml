@@ -3,13 +3,17 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import roc_auc_score
-from .config import RANDOM_STATE, MODELS_DIR
-from .model_evaluator import ModelEvaluator
+from config import RANDOM_STATE, MODELS_DIR
+from models_evaluator import ModelEvaluator
 import joblib
 
+import numpy as np
+import tensorflow as tf
+import autokeras as ak
 
-
+from sklearn.utils.class_weight import compute_class_weight
+from sklearn.metrics import classification_report, roc_auc_score
+import dill as pickle
 
 def train_with_gridsearch(
     model,
@@ -25,8 +29,6 @@ def train_with_gridsearch(
 ):
     
     #Lógica común de entrenamiento + evaluación + guardado
-    
-
     model_cv = GridSearchCV(
         estimator=model,
         param_grid=param_grid,
@@ -52,7 +54,6 @@ def train_with_gridsearch(
         "model": best_model,
         "metrics": metrics
     }
-
 
 # ------------------------
 # Entrenamiento Regresión Logística
@@ -149,4 +150,67 @@ def train_xgboost(
 
 # ------------------------
 # Entrenamiento Red Neuronal
+# Usando Autokeras, con pesos de clase y ajuste de umbral.
 # ------------------------
+def train_neural_network(
+    X_train,
+    y_train,
+    X_test,
+    y_test,
+    threshold: float = 0.35,
+):
+    # Cálculo de pesos de clase
+    classes = np.unique(y_train)
+    class_weights = compute_class_weight(
+        class_weight="balanced",
+        classes=classes,
+        y=y_train
+    )
+    class_weight_dict = dict(zip(classes, class_weights))
+    print(class_weight_dict)
+    # Definición del modelo AutoKeras
+    clf = ak.StructuredDataClassifier(
+        max_trials=10,              
+        objective="val_accuracy",
+        overwrite=True,
+        seed=RANDOM_STATE
+    )
+    early_stop = tf.keras.callbacks.EarlyStopping(
+        monitor="val_accuracy",
+        patience=5,
+        mode="max",
+        restore_best_weights=True
+    )
+    # Entrenamiento
+    clf.fit(
+        X_train.toarray(),
+        y_train.to_numpy(),
+        epochs=40,
+        validation_split=0.2,
+        class_weight=class_weight_dict,
+        callbacks=[early_stop],
+        verbose=1
+    )
+  
+
+    # Exportar mejor modelo
+    best_model = clf.export_model()
+    best_model.summary()
+
+    # Evaluación UNIFICADA
+    evaluator = ModelEvaluator()
+    metrics = evaluator.evaluate(
+        best_model,
+        X_test.toarray(),
+        y_test.to_numpy(),
+        threshold=threshold
+    )
+
+    # Guardado
+    with open(MODELS_DIR / "neural_network_best_model.pkl", "wb") as f:
+        pickle.dump(best_model, f)
+
+    return {
+        "model": best_model,
+        "metrics": metrics
+    }
