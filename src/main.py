@@ -8,4 +8,6 @@ if __name__ == "__main__":
     # Crear y entrenar los distintos modelos y guarda los resultados
     model_trainer = ModelsTrainer()
     model_trainer.run(X_train, y_train, X_test, y_test)
+    results_df = model_trainer.save_results()
+    print("\nResultados de los modelos:\n", results_df)
 
