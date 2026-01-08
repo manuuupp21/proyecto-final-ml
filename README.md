@@ -35,7 +35,7 @@ proyecto-final-ml/
 ├── src/                             # Código fuente del proyecto
 │   ├── __init__.py                  # Inicializador del paquete src
 │   ├── config.py                    # Parámetros y configuración del proyecto
-│   ├── data_loader.py               # Funciones para cargar y transformar datos
+│   ├── data_prep.py               # Funciones para cargar y preperar los datos
 │   ├── model_trainer.py             # Clase o funciones para entrenar modelos
 │   ├── evaluator.py                 # Métricas y visualización de resultados
 │   └── predictor.py                 # Funciones para hacer predicciones con modelos entrenados
