@@ -4,8 +4,14 @@
 /data/processed/
 dataset_practica_final.csv
 
+<<<<<<< HEAD
 # Ignorar carpeta de intentos del AutoKeras.
 notebooks/finals/structured_data_classifier/
+=======
+# Ignorar archivos de modelos entrenados
+/models/*.pkl
+/models/tests/*
+>>>>>>> 53f4ffe9ff522445edfa78a075f87b9f2c4dfb81
 
 
 # Ignorar archivos temporales
@@ -45,6 +51,7 @@ pip-delete-this-directory.txt
 *.pyd
 __pycache__/
 
+<<<<<<< HEAD
 # ignorar modelos entrenados en formato .pkl
 models/
 *.pt
@@ -53,6 +60,8 @@ models/
 *.pkl
 *.joblib
 
+=======
+>>>>>>> 53f4ffe9ff522445edfa78a075f87b9f2c4dfb81
 # Archivos de sistemas operativos específicos
 .DS_Store          # macOS
 Thumbs.db          # Windows
@@ -60,4 +69,13 @@ Thumbs.db          # Windows
 # Ignorar archivos específicos de notebooks de Jupyter
 *.ipynb_checkpoints/
 
+<<<<<<< HEAD
 .DS_Store
+=======
+models/champion/
+models/champions/
+models/*.pkl
+models/**/*.pkl
+models/model_results.csv
+structured_data_classifier
+>>>>>>> 53f4ffe9ff522445edfa78a075f87b9f2c4dfb81
