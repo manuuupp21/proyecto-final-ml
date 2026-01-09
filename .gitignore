@@ -53,5 +53,5 @@ Thumbs.db          # Windows
 # Ignorar archivos específicos de notebooks de Jupyter
 *.ipynb_checkpoints/
 
-models/model_results.csv
+models
 structured_data_classifier
