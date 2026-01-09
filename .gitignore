@@ -4,14 +4,8 @@
 /data/processed/
 dataset_practica_final.csv
 
-<<<<<<< HEAD
 # Ignorar carpeta de intentos del AutoKeras.
 notebooks/finals/structured_data_classifier/
-=======
-# Ignorar archivos de modelos entrenados
-/models/*.pkl
-/models/tests/*
->>>>>>> 53f4ffe9ff522445edfa78a075f87b9f2c4dfb81
 
 
 # Ignorar archivos temporales
