@@ -45,7 +45,7 @@ def train_with_gridsearch(
     best_model = model_cv.best_estimator_
 
     evaluator = ModelEvaluator()
-    metrics = evaluator.evaluate(best_model, X_test, y_test)
+    metrics = evaluator.evaluate(best_model, X_test, y_test, threshold=0.5)
 
     model_path = MODELS_DIR / model_filename
     joblib.dump(best_model, model_path)
