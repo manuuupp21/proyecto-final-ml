@@ -1,6 +1,7 @@
 
-from config import  MODELS_DIR
+from config import  MODELS_DIR, CHAMPION_DIR
 import pandas as pd
+import shutil
 from models import (
     train_logistic_regression,
     train_random_forest,
@@ -48,6 +49,13 @@ class ModelsTrainer:
                 best_score = score
                 self.best_model = result["model"]
                 self.best_model_name = name
+        # MOVER EL MODELO CAMPEÓN a LA CARPETA champion
+        source_path = MODELS_DIR / f"{self.best_model_name}_best_model.pkl"
+        target_path = CHAMPION_DIR / source_path.name
+        if not source_path.exists():
+            raise FileNotFoundError(f"No existe el modelo: {source_path}")
+        shutil.move(source_path, target_path)
+
 
     def save_results(self, filename="model_results.csv"):
         df = pd.DataFrame(self.results)
