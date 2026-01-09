@@ -4,6 +4,9 @@
 /data/processed/
 dataset_practica_final.csv
 
+# Ignorar carpeta de intentos del AutoKeras.
+notebooks/finals/structured_data_classifier/
+
 
 # Ignorar archivos temporales
 *.log
